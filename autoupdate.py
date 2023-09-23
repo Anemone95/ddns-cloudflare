@@ -56,7 +56,7 @@ if not dns_records['success']:
 if len(dns_records["result"]) == 0:
     url = f"https://api.cloudflare.com/client/v4/zones/{zone_identifier}/dns_records"
     data = {
-        "content": "198.51.100.4",
+        "content": ip,
         "name": "mega.anemone.top",
         "proxied": False,
         "type": "A",
@@ -69,7 +69,7 @@ else:
     id=dns_records["result"][0]['id']
     url = f"https://api.cloudflare.com/client/v4/zones/{zone_identifier}/dns_records/{id}"
     data = {
-        "content": "198.51.100.4",
+        "content": ip,
         "name": "mega.anemone.top",
         "proxied": False,
         "type": "A",
