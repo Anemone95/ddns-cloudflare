@@ -16,6 +16,15 @@ def get_inet_value(interface_name):
     else:
         raise Error("No ip address")
 
+def get_public_ipv4():
+    url = "http://169.254.169.254/latest/meta-data/public-ipv4"
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        return response.text
+    except requests.RequestException as e:
+        raise Error(f"Error fetching public IPv4: {e}")
+
 zone_name = "anemone.top"
 a_name = "mega.anemone.top"
 
@@ -25,7 +34,7 @@ with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json'
 # Extract 'email' and 'key' values
 email = data['email']
 key = data['key']
-ip = get_inet_value(data['interface'])
+ip = get_public_ipv4()
 
 headers = {
     "Content-Type": "application/json",
